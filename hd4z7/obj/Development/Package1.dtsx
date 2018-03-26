@@ -11,8 +11,8 @@
   DTS:LocaleID="2057"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="12"
-  DTS:VersionGUID="{A2F18A58-7ABB-4D2B-9878-CD152BD38D74}">
+  DTS:VersionBuild="27"
+  DTS:VersionGUID="{D69F276B-2C22-47E5-BDD1-D7B0BE58F9E1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -43,7 +43,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{8D260B70-307D-4BF9-A7E3-442F685315B4}"
-          SQLTask:SqlStatementSource="CREATE SCHEMA [blady]&#xA;GO&#xA;&#xA;CREATE FUNCTION [blady].[getHireDate](@employeeID INT)&#xA;RETURNS date&#xA;AS&#xA;BEGIN&#xA; RETURN &#xA; (&#xA;  SELECT HireDate &#xA;  FROM HumanResources.Employee &#xA;  WHERE BusinessEntityID = @employeeID&#xA; )&#xA;END&#xA;GO&#xA;&#xA;CREATE FUNCTION [blady].[getBirthDate](@employeeID INT)&#xA;RETURNS date&#xA;AS&#xA;BEGIN&#xA; RETURN &#xA; (&#xA;  SELECT BirthDate &#xA;  FROM HumanResources.Employee &#xA;  WHERE BusinessEntityID = @employeeID&#xA; )&#xA;END&#xA;GO&#xA;&#xA;CREATE FUNCTION [blady].[datetimeToInt](@date datetime)&#xA;RETURNS INT&#xA;AS&#xA;BEGIN&#xA; RETURN YEAR(@date) * 10000 + MONTH(@date) * 100 + DAY(@date)&#xA;END&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[DIM_CUSTOMER]&#xA;(&#xA; [CustomerID] INT CONSTRAINT nn_dCust_id NOT NULL,&#xA; [FirstName] Name,&#xA; [LastName] Name,&#xA; [TerritoryName] Name,&#xA; [CountryRegionCode] NVARCHAR(3),&#xA; [Group] NVARCHAR(50)&#xA;)&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[DIM_PRODUCT]&#xA;(&#xA; [ProductID] INT CONSTRAINT nn_dProd_id NOT NULL,&#xA; [Name] Name,&#xA; [ListPrice] money,&#xA; [Color] NVARCHAR(15),&#xA; [Rating] INT,&#xA; [SubCategoryName] Name,&#xA; [CategoryName] Name&#xA;)&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[DIM_SALESPERSON]&#xA;(&#xA; [SalesPersonID] INT CONSTRAINT nn_dSP_id NOT NULL,&#xA; [FirstName] Name,&#xA; [LastName] Name,&#xA; [Title] NVARCHAR(8),&#xA; [Gender] NCHAR(1),&#xA; [CountryRegionCode] NVARCHAR(3),&#xA; [Group] NVARCHAR(50),&#xA; [Age] AS DATEDIFF(YEAR, blady.getBirthDate(SalesPersonID), GETDATE()),&#xA; [Seniority] AS DATEDIFF(YEAR, blady.getHireDate(SalesPersonID), GETDATE())&#xA;)&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[FACT_SALES]&#xA;(&#xA; [FactSalesID] INT IDENTITY(1,1),&#xA; [ProductID] INT,&#xA; [CustomerID] INT,&#xA; [SalesPersonID] INT,&#xA; [OrderDate] INT,&#xA; [ShipDate] INT,&#xA; [OrderQty] SMALLINT,&#xA; [UnitPrice] money,&#xA; [UnitPriceDiscount] money,&#xA; [LineTotal] numeric(38,6)&#xA;)&#xA;GO&#xA;DBCC CHECKIDENT ('blady.FACT_SALES', RESEED, 0);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="CREATE SCHEMA [blady]&#xA;GO&#xA;&#xA;CREATE FUNCTION [blady].[getHireDate](@employeeID INT)&#xA;RETURNS date&#xA;AS&#xA;BEGIN&#xA;&#x9;RETURN &#xA;&#x9;(&#xA;&#x9;&#x9;SELECT HireDate &#xA;&#x9;&#x9;FROM HumanResources.Employee &#xA;&#x9;&#x9;WHERE BusinessEntityID = @employeeID&#xA;&#x9;)&#xA;END&#xA;GO&#xA;&#xA;CREATE FUNCTION [blady].[getBirthDate](@employeeID INT)&#xA;RETURNS date&#xA;AS&#xA;BEGIN&#xA;&#x9;RETURN &#xA;&#x9;(&#xA;&#x9;&#x9;SELECT BirthDate &#xA;&#x9;&#x9;FROM HumanResources.Employee &#xA;&#x9;&#x9;WHERE BusinessEntityID = @employeeID&#xA;&#x9;)&#xA;END&#xA;GO&#xA;&#xA;CREATE FUNCTION [blady].[datetimeToInt](@date datetime)&#xA;RETURNS INT&#xA;AS&#xA;BEGIN&#xA;&#x9;RETURN YEAR(@date) * 10000 + MONTH(@date) * 100 + DAY(@date)&#xA;END&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[NAZWA_MIESIACA]&#xA;(&#xA;&#x9;[id] INT PRIMARY KEY,&#xA;&#x9;[Name] NVARCHAR(11)&#xA;)&#xA;GO&#xA;CREATE TABLE [blady].[DZIEN_TYGODNIA]&#xA;(&#xA;&#x9;[id] INT PRIMARY KEY,&#xA;&#x9;[Name] NVARCHAR(12)&#xA;)&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[DIM_CUSTOMER]&#xA;(&#xA;&#x9;[CustomerID] INT CONSTRAINT nn_dCust_id NOT NULL,&#xA;&#x9;[FirstName] Name,&#xA;&#x9;[LastName] Name,&#xA;&#x9;[TerritoryName] Name,&#xA;&#x9;[CountryRegionCode] NVARCHAR(3),&#xA;&#x9;[Group] NVARCHAR(50)&#xA;)&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[DIM_PRODUCT]&#xA;(&#xA;&#x9;[ProductID] INT CONSTRAINT nn_dProd_id NOT NULL,&#xA;&#x9;[Name] Name,&#xA;&#x9;[ListPrice] money,&#xA;&#x9;[Color] NVARCHAR(15),&#xA;&#x9;[Rating] INT,&#xA;&#x9;[SubCategoryName] Name,&#xA;&#x9;[CategoryName] Name&#xA;)&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[DIM_SALESPERSON]&#xA;(&#xA;&#x9;[SalesPersonID] INT CONSTRAINT nn_dSP_id NOT NULL,&#xA;&#x9;[FirstName] Name,&#xA;&#x9;[LastName] Name,&#xA;&#x9;[Title] NVARCHAR(8),&#xA;&#x9;[Gender] NCHAR(1),&#xA;&#x9;[CountryRegionCode] NVARCHAR(3),&#xA;&#x9;[Group] NVARCHAR(50),&#xA;&#x9;[Age] AS DATEDIFF(YEAR, blady.getBirthDate(SalesPersonID), GETDATE()),&#xA;&#x9;[Seniority] AS DATEDIFF(YEAR, blady.getHireDate(SalesPersonID), GETDATE())&#xA;)&#xA;GO&#xA;&#xA;CREATE TABLE [blady].[FACT_SALES]&#xA;(&#xA;&#x9;[FactSalesID] INT IDENTITY(1,1),&#xA;&#x9;[ProductID] INT,&#xA;&#x9;[CustomerID] INT,&#xA;&#x9;[SalesPersonID] INT,&#xA;&#x9;[OrderDate] INT,&#xA;&#x9;[ShipDate] INT,&#xA;&#x9;[OrderQty] SMALLINT,&#xA;&#x9;[UnitPrice] money,&#xA;&#x9;[UnitPriceDiscount] money,&#xA;&#x9;[LineTotal] numeric(38,6)&#xA;)&#xA;GO&#xA;DBCC CHECKIDENT ('blady.FACT_SALES', RESEED, 0)&#xA;GO&#xA;CREATE TABLE [blady].[DIM_TIME]&#xA;(&#xA;&#x9;[PK_TIME] INT CONSTRAINT pk_dTime_time PRIMARY KEY,&#xA;&#x9;[Rok] INT,&#xA;&#x9;[Miesiac] NVARCHAR(11),&#xA;&#x9;[DzienTygodnia] NVARCHAR(12),&#xA;&#x9;[DzienMiesiaca] INT&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -6471,6 +6471,2520 @@
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
+      DTS:refId="Package\DIM_TIME"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{C0214BBE-EF33-414A-AA61-C8D72B873FE4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DIM_TIME"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DIM_TIME\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Data Conversion.Inputs[Data Conversion Input].Columns[ShipDate]"
+                      cachedDataType="i4"
+                      cachedName="ShipDate"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ShipDate]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\DIM_TIME\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]"
+                      name="ShipDateStr"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ShipDate]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\DIM_TIME\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Derived Column.Inputs[Derived Column Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DIM_TIME\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Output].Columns[WeekdayInt]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Output].Columns[WeekdayInt]"
+                      name="WeekdayInt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[DATEPART]("weekday",(DT_DBTIMESTAMP)#{Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">DATEPART("weekday",(DT_DBTIMESTAMP)ShipDateStr)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DIM_TIME\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Derived Column 1.Inputs[Derived Column Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[LEFT](#{Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]},4) + "/" + [LEFT]([RIGHT](#{Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]},4),2) + "/" + [RIGHT](#{Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]},2)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">LEFT(ShipDateStr,4) + "/" + LEFT(RIGHT(ShipDateStr,4),2) + "/" + RIGHT(ShipDateStr,2)</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DIM_TIME\Derived Column 1.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DIM_TIME\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DIM_TIME\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Derived Column 2"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 2"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Derived Column 2.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Derived Column 2.Inputs[Derived Column Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDateStr]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DIM_TIME\Derived Column 2.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Output].Columns[MonthINT]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Output].Columns[MonthINT]"
+                      name="MonthINT"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[MONTH]((DT_DBTIMESTAMP)#{Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDateStr]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">MONTH((DT_DBTIMESTAMP)ShipDateStr)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DIM_TIME\Derived Column 2.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\DzienMiesiaca"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="DzienMiesiaca"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\DzienMiesiaca.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\DzienMiesiaca.Inputs[Derived Column Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDateStr]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DIM_TIME\DzienMiesiaca.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Output].Columns[DzienMiesiaca]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Output].Columns[DzienMiesiaca]"
+                      name="DzienMiesiaca"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[DAY]((DT_DBTIMESTAMP)#{Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDateStr]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">DAY((DT_DBTIMESTAMP)ShipDateStr)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DIM_TIME\DzienMiesiaca.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\DZIEN_TYGODNIA"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="DZIEN_TYGODNIA"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[blady].[DZIEN_TYGODNIA]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DIM_TIME\DZIEN_TYGODNIA.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KGG4CL5.AdventureWorks2014]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KGG4CL5.AdventureWorks2014]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].Columns[id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].ExternalColumns[id]"
+                      lineageId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].Columns[id]"
+                      name="id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      length="12"
+                      lineageId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="12"
+                      name="Name" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output].Columns[id]"
+                      name="id" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\FACT_SALES"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="FACT_SALES"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[blady].[FACT_SALES]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DIM_TIME\FACT_SALES.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KGG4CL5.AdventureWorks2014]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KGG4CL5.AdventureWorks2014]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[FactSalesID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[FactSalesID]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[FactSalesID]"
+                      name="FactSalesID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[SalesPersonID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[SalesPersonID]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[SalesPersonID]"
+                      name="SalesPersonID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      name="OrderDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ShipDate]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ShipDate]"
+                      name="ShipDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                      name="OrderQty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]"
+                      name="UnitPriceDiscount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[LineTotal]"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[FactSalesID]"
+                      dataType="i4"
+                      name="FactSalesID" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[SalesPersonID]"
+                      dataType="i4"
+                      name="SalesPersonID" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      dataType="i4"
+                      name="OrderDate" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                      dataType="i4"
+                      name="ShipDate" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                      dataType="i2"
+                      name="OrderQty" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      dataType="cy"
+                      name="UnitPrice" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                      dataType="cy"
+                      name="UnitPriceDiscount" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].ExternalColumns[LineTotal]"
+                      dataType="numeric"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[FactSalesID]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[FactSalesID]"
+                      name="FactSalesID" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[SalesPersonID]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[SalesPersonID]"
+                      name="SalesPersonID" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      name="OrderDate" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[ShipDate]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[ShipDate]"
+                      name="ShipDate" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                      name="OrderQty" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                      dataType="cy"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                      name="UnitPrice" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[UnitPriceDiscount]"
+                      dataType="cy"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[UnitPriceDiscount]"
+                      name="UnitPriceDiscount" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Left Input].Columns[WeekdayInt]"
+                      cachedDataType="i4"
+                      cachedName="WeekdayInt"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[WeekdayInt]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Left Input].Columns[ShipDate]"
+                      cachedDataType="i4"
+                      cachedName="ShipDate"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[ShipDate]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Left Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[ShipDateStr]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Right Input].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DIM_TIME\Sort.Outputs[Sort Output].Columns[id]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Right Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="Name"
+                      lineageId="Package\DIM_TIME\Sort.Outputs[Sort Output].Columns[Name]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output]"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[TydzienName]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[TydzienName]"
+                      name="TydzienName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DIM_TIME\Merge Join.Inputs[Merge Join Right Input].Columns[Name]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDate]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDate]"
+                      name="ShipDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DIM_TIME\Merge Join.Inputs[Merge Join Left Input].Columns[ShipDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDateStr]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDateStr]"
+                      name="ShipDateStr">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DIM_TIME\Merge Join.Inputs[Merge Join Left Input].Columns[ShipDateStr]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Merge Join 1"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input].Columns[MonthINT]"
+                      cachedDataType="i4"
+                      cachedName="MonthINT"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[MonthINT]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input].Columns[ShipDate]"
+                      cachedDataType="i4"
+                      cachedName="ShipDate"
+                      lineageId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[ShipDate]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input].Columns[TydzienName]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="TydzienName"
+                      lineageId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[TydzienName]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[ShipDateStr]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Right Input].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DIM_TIME\Sort 2.Outputs[Sort Output].Columns[id]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Right Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="Name"
+                      lineageId="Package\DIM_TIME\Sort 2.Outputs[Sort Output].Columns[Name]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output]"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDate]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDate]"
+                      name="ShipDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input].Columns[ShipDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[TydzienName]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[TydzienName]"
+                      name="TydzienName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input].Columns[TydzienName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[MonthName]"
+                      dataType="wstr"
+                      length="11"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[MonthName]"
+                      name="MonthName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Right Input].Columns[Name]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDateStr]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDateStr]"
+                      name="ShipDateStr">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input].Columns[ShipDateStr]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\NAZWA_MIESIACA"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="NAZWA_MIESIACA"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[blady].[NAZWA_MIESIACA]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DIM_TIME\NAZWA_MIESIACA.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KGG4CL5.AdventureWorks2014]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KGG4CL5.AdventureWorks2014]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].Columns[id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].ExternalColumns[id]"
+                      lineageId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].Columns[id]"
+                      name="id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      length="11"
+                      lineageId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="11"
+                      name="Name" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output].Columns[id]"
+                      name="id" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="11"
+                      lineageId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[blady].[DIM_TIME]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DIM_TIME\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-KGG4CL5.AdventureWorks2014]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-KGG4CL5.AdventureWorks2014]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Rok]"
+                      cachedDataType="i4"
+                      cachedName="Rok"
+                      externalMetadataColumnId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Rok]"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[Rok]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DzienMiesiaca]"
+                      cachedDataType="i4"
+                      cachedName="DzienMiesiaca"
+                      externalMetadataColumnId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DzienMiesiaca]"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[DzienMiesiaca]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ShipDate]"
+                      cachedDataType="i4"
+                      cachedName="ShipDate"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PK_TIME]"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[ShipDate]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TydzienName]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="TydzienName"
+                      externalMetadataColumnId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DzienTygodnia]"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[TydzienName]" />
+                    <inputColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MonthName]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="MonthName"
+                      externalMetadataColumnId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Miesiac]"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[MonthName]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PK_TIME]"
+                      dataType="i4"
+                      name="PK_TIME" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Rok]"
+                      dataType="i4"
+                      name="Rok" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Miesiac]"
+                      dataType="wstr"
+                      length="11"
+                      name="Miesiac" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DzienTygodnia]"
+                      dataType="wstr"
+                      length="12"
+                      name="DzienTygodnia" />
+                    <externalMetadataColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DzienMiesiaca]"
+                      dataType="i4"
+                      name="DzienMiesiaca" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Rok"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Rok"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Rok.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Rok.Inputs[Derived Column Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDateStr]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Rok.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DIM_TIME\Rok.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Rok.Outputs[Derived Column Output].Columns[Rok]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DIM_TIME\Rok.Outputs[Derived Column Output].Columns[Rok]"
+                      name="Rok"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[YEAR]((DT_DBTIMESTAMP)#{Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDateStr]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">YEAR((DT_DBTIMESTAMP)ShipDateStr)</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DIM_TIME\Rok.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DIM_TIME\Rok.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Rok.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Rok.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DIM_TIME\Rok.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Rok.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort.Inputs[Sort Input].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      lineageId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].Columns[id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort.Inputs[Sort Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="Name"
+                      lineageId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].Columns[Name]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort.Outputs[Sort Output].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort.Outputs[Sort Output].Columns[id]"
+                      name="id"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].Columns[id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort.Outputs[Sort Output].Columns[Name]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DIM_TIME\Sort.Outputs[Sort Output].Columns[Name]"
+                      name="Name">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output].Columns[Name]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[FactSalesID]"
+                      cachedDataType="i4"
+                      cachedName="FactSalesID"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[FactSalesID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ProductID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[CustomerID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[SalesPersonID]"
+                      cachedDataType="i4"
+                      cachedName="SalesPersonID"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[SalesPersonID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[OrderDate]"
+                      cachedDataType="i4"
+                      cachedName="OrderDate"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[OrderDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[ShipDate]"
+                      cachedDataType="i4"
+                      cachedName="ShipDate"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ShipDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[OrderQty]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[UnitPrice]"
+                      cachedDataType="cy"
+                      cachedName="UnitPrice"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[UnitPrice]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[UnitPriceDiscount]"
+                      cachedDataType="cy"
+                      cachedName="UnitPriceDiscount"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[LineTotal]"
+                      cachedDataType="numeric"
+                      cachedName="LineTotal"
+                      cachedPrecision="38"
+                      cachedScale="6"
+                      lineageId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[LineTotal]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 1.Inputs[Sort Input].Columns[WeekdayInt]"
+                      cachedDataType="i4"
+                      cachedName="WeekdayInt"
+                      lineageId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Output].Columns[WeekdayInt]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[FactSalesID]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[FactSalesID]"
+                      name="FactSalesID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[FactSalesID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[ProductID]"
+                      name="ProductID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ProductID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[CustomerID]"
+                      name="CustomerID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[CustomerID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[SalesPersonID]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[SalesPersonID]"
+                      name="SalesPersonID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[SalesPersonID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[OrderDate]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[OrderDate]"
+                      name="OrderDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[OrderDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[ShipDate]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[ShipDate]"
+                      name="ShipDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[ShipDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[OrderQty]"
+                      name="OrderQty">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[OrderQty]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[UnitPrice]"
+                      dataType="cy"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[UnitPrice]"
+                      name="UnitPrice">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[UnitPrice]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[UnitPriceDiscount]"
+                      dataType="cy"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[UnitPriceDiscount]"
+                      name="UnitPriceDiscount">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output].Columns[LineTotal]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[ShipDateStr]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[ShipDateStr]"
+                      name="ShipDateStr">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output].Columns[ShipDateStr]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[WeekdayInt]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 1.Outputs[Sort Output].Columns[WeekdayInt]"
+                      name="WeekdayInt"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Derived Column.Outputs[Derived Column Output].Columns[WeekdayInt]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Sort 2"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 2"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Sort 2.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 2.Inputs[Sort Input].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      lineageId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].Columns[id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 2.Inputs[Sort Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="Name"
+                      lineageId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].Columns[Name]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Sort 2.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 2.Outputs[Sort Output].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 2.Outputs[Sort Output].Columns[id]"
+                      name="id"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].Columns[id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 2.Outputs[Sort Output].Columns[Name]"
+                      dataType="wstr"
+                      length="11"
+                      lineageId="Package\DIM_TIME\Sort 2.Outputs[Sort Output].Columns[Name]"
+                      name="Name">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output].Columns[Name]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Sort 3"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 3"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Sort 3.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 3.Inputs[Sort Input].Columns[TydzienName]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="TydzienName"
+                      lineageId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[TydzienName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 3.Inputs[Sort Input].Columns[ShipDate]"
+                      cachedDataType="i4"
+                      cachedName="ShipDate"
+                      lineageId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 3.Inputs[Sort Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDateStr]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 3.Inputs[Sort Input].Columns[MonthINT]"
+                      cachedDataType="i4"
+                      cachedName="MonthINT"
+                      lineageId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Output].Columns[MonthINT]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Sort 3.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[TydzienName]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[TydzienName]"
+                      name="TydzienName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[TydzienName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[ShipDate]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[ShipDate]"
+                      name="ShipDate">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[ShipDateStr]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[ShipDateStr]"
+                      name="ShipDateStr">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Merge Join.Outputs[Merge Join Output].Columns[ShipDateStr]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[MonthINT]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 3.Outputs[Sort Output].Columns[MonthINT]"
+                      name="MonthINT"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Output].Columns[MonthINT]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DIM_TIME\Sort 4"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 4"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DIM_TIME\Sort 4.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 4.Inputs[Sort Input].Columns[ShipDate]"
+                      cachedDataType="i4"
+                      cachedName="ShipDate"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDate]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 4.Inputs[Sort Input].Columns[TydzienName]"
+                      cachedDataType="wstr"
+                      cachedLength="12"
+                      cachedName="TydzienName"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[TydzienName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 4.Inputs[Sort Input].Columns[MonthName]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="MonthName"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[MonthName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 4.Inputs[Sort Input].Columns[ShipDateStr]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="ShipDateStr"
+                      lineageId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDateStr]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 4.Inputs[Sort Input].Columns[Rok]"
+                      cachedDataType="i4"
+                      cachedName="Rok"
+                      lineageId="Package\DIM_TIME\Rok.Outputs[Derived Column Output].Columns[Rok]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DIM_TIME\Sort 4.Inputs[Sort Input].Columns[DzienMiesiaca]"
+                      cachedDataType="i4"
+                      cachedName="DzienMiesiaca"
+                      lineageId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Output].Columns[DzienMiesiaca]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DIM_TIME\Sort 4.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[ShipDate]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[ShipDate]"
+                      name="ShipDate"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDate]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[TydzienName]"
+                      dataType="wstr"
+                      length="12"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[TydzienName]"
+                      name="TydzienName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[TydzienName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[MonthName]"
+                      dataType="wstr"
+                      length="11"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[MonthName]"
+                      name="MonthName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[MonthName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[ShipDateStr]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[ShipDateStr]"
+                      name="ShipDateStr">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output].Columns[ShipDateStr]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[Rok]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[Rok]"
+                      name="Rok">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\Rok.Outputs[Derived Column Output].Columns[Rok]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[DzienMiesiaca]"
+                      dataType="i4"
+                      lineageId="Package\DIM_TIME\Sort 4.Outputs[Sort Output].Columns[DzienMiesiaca]"
+                      name="DzienMiesiaca">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Output].Columns[DzienMiesiaca]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DIM_TIME.Paths[Data Conversion Output]"
+              endId="Package\DIM_TIME\Derived Column 1.Inputs[Derived Column Input]"
+              name="Data Conversion Output"
+              startId="Package\DIM_TIME\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Derived Column Output]"
+              endId="Package\DIM_TIME\Derived Column.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\DIM_TIME\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Derived Column Output1]"
+              endId="Package\DIM_TIME\Sort 1.Inputs[Sort Input]"
+              name="Derived Column Output"
+              startId="Package\DIM_TIME\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Derived Column Output2]"
+              endId="Package\DIM_TIME\Sort 3.Inputs[Sort Input]"
+              name="Derived Column Output"
+              startId="Package\DIM_TIME\Derived Column 2.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Derived Column Output3]"
+              endId="Package\DIM_TIME\DzienMiesiaca.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\DIM_TIME\Rok.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Derived Column Output4]"
+              endId="Package\DIM_TIME\Sort 4.Inputs[Sort Input]"
+              name="Derived Column Output"
+              startId="Package\DIM_TIME\DzienMiesiaca.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Merge Join Output]"
+              endId="Package\DIM_TIME\Derived Column 2.Inputs[Derived Column Input]"
+              name="Merge Join Output"
+              startId="Package\DIM_TIME\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Merge Join Output1]"
+              endId="Package\DIM_TIME\Rok.Inputs[Derived Column Input]"
+              name="Merge Join Output"
+              startId="Package\DIM_TIME\Merge Join 1.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[OLE DB Source Output]"
+              endId="Package\DIM_TIME\Data Conversion.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\DIM_TIME\FACT_SALES.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[OLE DB Source Output1]"
+              endId="Package\DIM_TIME\Sort.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\DIM_TIME\DZIEN_TYGODNIA.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[OLE DB Source Output2]"
+              endId="Package\DIM_TIME\Sort 2.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\DIM_TIME\NAZWA_MIESIACA.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Sort Output]"
+              endId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\DIM_TIME\Sort 1.Outputs[Sort Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Sort Output1]"
+              endId="Package\DIM_TIME\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\DIM_TIME\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Sort Output2]"
+              endId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\DIM_TIME\Sort 3.Outputs[Sort Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Sort Output3]"
+              endId="Package\DIM_TIME\Merge Join 1.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\DIM_TIME\Sort 2.Outputs[Sort Output]" />
+            <path
+              refId="Package\DIM_TIME.Paths[Sort Output4]"
+              endId="Package\DIM_TIME\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Sort Output"
+              startId="Package\DIM_TIME\Sort 4.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\DROP"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
@@ -6484,7 +8998,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{8D260B70-307D-4BF9-A7E3-442F685315B4}"
-          SQLTask:SqlStatementSource="IF EXISTS&#xA;(&#xA; SELECT * &#xA; FROM INFORMATION_SCHEMA.TABLES&#xA; WHERE TABLE_NAME = 'FACT_SALES' AND TABLE_SCHEMA = 'blady'&#xA;)&#xA;DROP TABLE blady.FACT_SALES&#xA;GO&#xA;IF EXISTS&#xA;(&#xA; SELECT * &#xA; FROM INFORMATION_SCHEMA.TABLES&#xA; WHERE TABLE_NAME = 'DIM_CUSTOMER' AND TABLE_SCHEMA = 'blady'&#xA;)&#xA;DROP TABLE blady.DIM_CUSTOMER&#xA;GO&#xA;IF EXISTS&#xA;(&#xA; SELECT * &#xA; FROM INFORMATION_SCHEMA.TABLES&#xA; WHERE TABLE_NAME = 'DIM_PRODUCT' AND TABLE_SCHEMA = 'blady'&#xA;)&#xA;DROP TABLE blady.DIM_PRODUCT&#xA;GO&#xA;IF EXISTS&#xA;(&#xA; SELECT * &#xA; FROM INFORMATION_SCHEMA.TABLES&#xA; WHERE TABLE_NAME = 'DIM_SALESPERSON' AND TABLE_SCHEMA = 'blady'&#xA;)&#xA;DROP TABLE blady.DIM_SALESPERSON&#xA;GO&#xA;DROP FUNCTION IF EXISTS [blady].[getBirthDate]&#xA;GO&#xA;DROP FUNCTION IF EXISTS [blady].[getHireDate]&#xA;GO&#xA;DROP FUNCTION IF EXISTS [blady].[datetimeToInt]&#xA;GO&#xA;&#xA;DROP SCHEMA IF EXISTS [blady];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="DROP TABLE IF EXISTS [blady].[DIM_TIME]&#xA;GO&#xA;DROP TABLE IF EXISTS [blady].[DZIEN_TYGODNIA]&#xA;GO&#xA;DROP TABLE IF EXISTS [blady].[NAZWA_MIESIACA]&#xA;GO&#xA;IF EXISTS&#xA;(&#xA;&#x9;SELECT * &#xA;&#x9;FROM INFORMATION_SCHEMA.TABLES&#xA;&#x9;WHERE TABLE_NAME = 'FACT_SALES' AND TABLE_SCHEMA = 'blady'&#xA;)&#xA;DROP TABLE blady.FACT_SALES&#xA;GO&#xA;IF EXISTS&#xA;(&#xA;&#x9;SELECT * &#xA;&#x9;FROM INFORMATION_SCHEMA.TABLES&#xA;&#x9;WHERE TABLE_NAME = 'DIM_CUSTOMER' AND TABLE_SCHEMA = 'blady'&#xA;)&#xA;DROP TABLE blady.DIM_CUSTOMER&#xA;GO&#xA;IF EXISTS&#xA;(&#xA;&#x9;SELECT * &#xA;&#x9;FROM INFORMATION_SCHEMA.TABLES&#xA;&#x9;WHERE TABLE_NAME = 'DIM_PRODUCT' AND TABLE_SCHEMA = 'blady'&#xA;)&#xA;DROP TABLE blady.DIM_PRODUCT&#xA;GO&#xA;IF EXISTS&#xA;(&#xA;&#x9;SELECT * &#xA;&#x9;FROM INFORMATION_SCHEMA.TABLES&#xA;&#x9;WHERE TABLE_NAME = 'DIM_SALESPERSON' AND TABLE_SCHEMA = 'blady'&#xA;)&#xA;DROP TABLE blady.DIM_SALESPERSON&#xA;GO&#xA;DROP FUNCTION IF EXISTS [blady].[getBirthDate]&#xA;GO&#xA;DROP FUNCTION IF EXISTS [blady].[getHireDate]&#xA;GO&#xA;DROP FUNCTION IF EXISTS [blady].[datetimeToInt]&#xA;GO&#xA;&#xA;DROP SCHEMA IF EXISTS [blady];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -9190,6 +11704,23 @@
           SQLTask:SqlStatementSource="ALTER TABLE [blady].[DIM_CUSTOMER]&#xA;ADD CONSTRAINT pk_dCust_id &#xA;PRIMARY KEY([CustomerID]);&#xA;&#xA;ALTER TABLE [blady].[DIM_PRODUCT]&#xA;ADD CONSTRAINT pk_dProd_id&#xA;PRIMARY KEY ([ProductID]);&#xA;&#xA;ALTER TABLE [blady].[DIM_SALESPERSON]&#xA;ADD CONSTRAINT pk_dSalesPerson_id&#xA;PRIMARY KEY ([SalesPersonID]);&#xA;&#xA;ALTER TABLE [blady].[FACT_SALES]&#xA;ADD CONSTRAINT fk_dFactSales_pId&#xA;FOREIGN KEY ([ProductID]) REFERENCES blady.DIM_PRODUCT([ProductID]);&#xA;&#xA;ALTER TABLE [blady].[FACT_SALES]&#xA;ADD CONSTRAINT fk_dFactSales_cId&#xA;FOREIGN KEY ([CustomerID]) REFERENCES blady.DIM_CUSTOMER([CustomerID]);&#xA;&#xA;ALTER TABLE [blady].[FACT_SALES]&#xA;ADD CONSTRAINT fk_dFactSales_spId&#xA;FOREIGN KEY ([SalesPersonID]) REFERENCES blady.DIM_SALESPERSON([SalesPersonID]);&#xA;&#xA;ALTER TABLE [blady].[FACT_SALES]&#xA;ADD CONSTRAINT pk_dFactSales_id&#xA;PRIMARY KEY ([FactSalesID]);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\NULLs"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6618fcba-6738-4ea9-a594-ecb359248695}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="NULLs"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8D260B70-307D-4BF9-A7E3-442F685315B4}"
+          SQLTask:SqlStatementSource="UPDATE blady.DIM_PRODUCT&#xA;SET Color = 'Unknown'&#xA;WHERE Color IS NULL;&#xA;&#xA;UPDATE blady.DIM_PRODUCT&#xA;SET SubCategoryName = 'Unknown'&#xA;WHERE SubCategoryName IS NULL;&#xA;&#xA;UPDATE blady.DIM_SALESPERSON&#xA;SET CountryRegionCode = '000'&#xA;WHERE CountryRegionCode IS NULL;&#xA;&#xA;UPDATE blady.DIM_SALESPERSON&#xA;SET [Group] = 'Unknown'&#xA;WHERE [Group] IS NULL;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -9251,11 +11782,27 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
       DTS:CreationName=""
-      DTS:DTSID="{8706FD38-ECD9-458F-A0D5-D6319822ECC1}"
-      DTS:From="Package\FACT_SALES"
+      DTS:DTSID="{DB08DFEF-B0F6-4824-9388-2B3BEE8726D7}"
+      DTS:From="Package\DIM_TIME"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 7"
       DTS:To="Package\INTEGRITY" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
+      DTS:CreationName=""
+      DTS:DTSID="{B01907E5-9980-442F-9281-DB95DC5DAE6F}"
+      DTS:From="Package\INTEGRITY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 8"
+      DTS:To="Package\NULLs" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{F92B6E43-07CC-4A4C-9E98-3074395F74B1}"
+      DTS:From="Package\FACT_SALES"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\DIM_TIME" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -9268,11 +11815,11 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="158,42"
           Id="Package\DIM_CUSTOMER"
-          TopLeft="27.5,195.5" />
+          TopLeft="153.5,203.5" />
         <NodeLayout
           Size="130,42"
           Id="Package\CREATE"
@@ -9280,33 +11827,21 @@
         <NodeLayout
           Size="106,42"
           Id="Package\DROP"
-          TopLeft="369,21" />
+          TopLeft="380,25" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="422,63">
+          TopLeft="431.5,67">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="8,32"
+              EndConnector="0,28"
               Start="0,0"
-              End="8,24.5">
+              End="0,20.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,12" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,12"
-                    Point2="0,16"
-                    Point3="4,16" />
-                  <mssgle:LineSegment
-                    End="4,16" />
-                  <mssgle:CubicBezierSegment
-                    Point1="4,16"
-                    Point2="8,16"
-                    Point3="8,20" />
-                  <mssgle:LineSegment
-                    End="8,24.5" />
+                    End="0,20.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -9317,30 +11852,30 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="409.666666666667,137">
+          TopLeft="399.5,137">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-303.166666666667,58.5"
+              EndConnector="-167,66.5"
               Start="0,0"
-              End="-303.166666666667,51">
+              End="-167,59">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.8267477203647" />
+                    End="0,19.0577889447236" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,19.8267477203647"
-                    Point2="0,23.8267477203647"
-                    Point3="-4,23.8267477203647" />
+                    Point1="0,19.0577889447236"
+                    Point2="0,23.0577889447236"
+                    Point3="-4,23.0577889447236" />
                   <mssgle:LineSegment
-                    End="-299.166666666667,23.8267477203647" />
+                    End="-163,23.0577889447236" />
                   <mssgle:CubicBezierSegment
-                    Point1="-299.166666666667,23.8267477203647"
-                    Point2="-303.166666666667,23.8267477203647"
-                    Point3="-303.166666666667,27.8267477203647" />
+                    Point1="-163,23.0577889447236"
+                    Point2="-167,23.0577889447236"
+                    Point3="-167,27.0577889447236" />
                   <mssgle:LineSegment
-                    End="-303.166666666667,51" />
+                    End="-167,59" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -9352,37 +11887,25 @@
         <NodeLayout
           Size="132,42"
           Id="Package\INTEGRITY"
-          TopLeft="173.5,422.5" />
+          TopLeft="694.5,308.5" />
         <NodeLayout
           Size="151,42"
           Id="Package\DIM_PRODUCT"
-          TopLeft="202,217" />
+          TopLeft="350,202" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="430,137">
+          TopLeft="427.75,137">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-152.5,80"
+              EndConnector="0,65"
               Start="0,0"
-              End="-152.5,72.5">
+              End="0,57.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,36" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,36"
-                    Point2="0,40"
-                    Point3="-4,40" />
-                  <mssgle:LineSegment
-                    End="-148.5,40" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-148.5,40"
-                    Point2="-152.5,40"
-                    Point3="-152.5,44" />
-                  <mssgle:LineSegment
-                    End="-152.5,72.5" />
+                    End="0,57.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -9394,33 +11917,33 @@
         <NodeLayout
           Size="173,42"
           Id="Package\DIM_SALESPERSON"
-          TopLeft="498,202" />
+          TopLeft="518,200" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
           TopLeft="460.5,137">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="124,65"
+              EndConnector="144,63"
               Start="0,0"
-              End="124,57.5">
+              End="144,55.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,18.5376884422111" />
+                    End="0,17.8442211055276" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,18.5376884422111"
-                    Point2="0,22.5376884422111"
-                    Point3="4,22.5376884422111" />
+                    Point1="0,17.8442211055276"
+                    Point2="0,21.8442211055276"
+                    Point3="4,21.8442211055276" />
                   <mssgle:LineSegment
-                    End="120,22.5376884422111" />
+                    End="140,21.8442211055276" />
                   <mssgle:CubicBezierSegment
-                    Point1="120,22.5376884422111"
-                    Point2="124,22.5376884422111"
-                    Point3="124,26.5376884422111" />
+                    Point1="140,21.8442211055276"
+                    Point2="144,21.8442211055276"
+                    Point3="144,25.8442211055276" />
                   <mssgle:LineSegment
-                    End="124,57.5" />
+                    End="144,55.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -9432,33 +11955,33 @@
         <NodeLayout
           Size="139,42"
           Id="Package\FACT_SALES"
-          TopLeft="176,345" />
+          TopLeft="356,304" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="106.5,237.5">
+          TopLeft="232.5,245.5">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="106.25,107.5"
+              EndConnector="160.25,58.5"
               Start="0,0"
-              End="106.25,100">
+              End="160.25,51">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,66.3176470588235" />
+                    End="0,34.2658823529412" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,66.3176470588235"
-                    Point2="0,70.3176470588235"
-                    Point3="4,70.3176470588235" />
+                    Point1="0,34.2658823529412"
+                    Point2="0,38.2658823529412"
+                    Point3="4,38.2658823529412" />
                   <mssgle:LineSegment
-                    End="102.25,70.3176470588235" />
+                    End="156.25,38.2658823529412" />
                   <mssgle:CubicBezierSegment
-                    Point1="102.25,70.3176470588235"
-                    Point2="106.25,70.3176470588235"
-                    Point3="106.25,74.3176470588235" />
+                    Point1="156.25,38.2658823529412"
+                    Point2="160.25,38.2658823529412"
+                    Point3="160.25,42.2658823529412" />
                   <mssgle:LineSegment
-                    End="106.25,100" />
+                    End="160.25,51" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -9469,30 +11992,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
-          TopLeft="277.5,259">
+          TopLeft="425.5,244">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-32,86"
+              EndConnector="0,60"
               Start="0,0"
-              End="-32,78.5">
+              End="0,52.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,39" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,39"
-                    Point2="0,43"
-                    Point3="-4,43" />
-                  <mssgle:LineSegment
-                    End="-28,43" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-28,43"
-                    Point2="-32,43"
-                    Point3="-32,47" />
-                  <mssgle:LineSegment
-                    End="-32,78.5" />
+                    End="0,52.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -9503,30 +12014,82 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 6]"
-          TopLeft="584.5,244">
+          TopLeft="604.5,242">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-306.25,101"
+              EndConnector="-146.25,62"
               Start="0,0"
-              End="-306.25,93.5">
+              End="-146.25,54.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,62.0658823529412" />
+                    End="0,36.5552941176471" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,62.0658823529412"
-                    Point2="0,66.0658823529412"
-                    Point3="-4,66.0658823529412" />
+                    Point1="0,36.5552941176471"
+                    Point2="0,40.5552941176471"
+                    Point3="-4,40.5552941176471" />
                   <mssgle:LineSegment
-                    End="-302.25,66.0658823529412" />
+                    End="-142.25,40.5552941176471" />
                   <mssgle:CubicBezierSegment
-                    Point1="-302.25,66.0658823529412"
-                    Point2="-306.25,66.0658823529412"
-                    Point3="-306.25,70.0658823529412" />
+                    Point1="-142.25,40.5552941176471"
+                    Point2="-146.25,40.5552941176471"
+                    Point3="-146.25,44.5552941176471" />
                   <mssgle:LineSegment
-                    End="-306.25,93.5" />
+                    End="-146.25,54.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="108,42"
+          Id="Package\NULLs"
+          TopLeft="891,308" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 8]"
+          TopLeft="826.5,329.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64.5,0"
+              Start="0,0"
+              End="57,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="57,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="129,42"
+          Id="Package\DIM_TIME"
+          TopLeft="540,308" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="669,329.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="25.5,0"
+              Start="0,0"
+              End="18,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="18,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -9536,19 +12099,19 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 7]"
-          TopLeft="242.5,387">
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="495,327">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,35.5"
+              EndConnector="45,0"
               Start="0,0"
-              End="0,28">
+              End="37.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,28" />
+                    End="37.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -11150,6 +13713,598 @@
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\FACT_SALES\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DIM_TIME">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\DIM_TIME\FACT_SALES"
+          TopLeft="25,14" />
+        <NodeLayout
+          Size="107,42"
+          Id="Package\DIM_TIME\Sort 2"
+          TopLeft="690,150" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\DIM_TIME\Merge Join 1"
+          TopLeft="704,231" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\DIM_TIME\Derived Column"
+          TopLeft="62,225" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\DIM_TIME\Data Conversion"
+          TopLeft="15,80" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[OLE DB Source Output]"
+          TopLeft="93.75,56">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,24"
+              Start="0,0"
+              End="0,16.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="163,42"
+          Id="Package\DIM_TIME\Derived Column 1"
+          TopLeft="39.5,146.5" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Data Conversion Output]"
+          TopLeft="93,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28,24.5"
+              Start="0,0"
+              End="28,17">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.25"
+                    Point2="0,12.25"
+                    Point3="4,12.25" />
+                  <mssgle:LineSegment
+                    End="24,12.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24,12.25"
+                    Point2="28,12.25"
+                    Point3="28,16.25" />
+                  <mssgle:LineSegment
+                    End="28,17" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Derived Column Output]"
+          TopLeft="121,188.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18,36.5"
+              Start="0,0"
+              End="18,29">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.25"
+                    Point2="0,18.25"
+                    Point3="4,18.25" />
+                  <mssgle:LineSegment
+                    End="14,18.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14,18.25"
+                    Point2="18,18.25"
+                    Point3="18,22.25" />
+                  <mssgle:LineSegment
+                    End="18,29" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="167,42"
+          Id="Package\DIM_TIME\DZIEN_TYGODNIA"
+          TopLeft="322,41" />
+        <NodeLayout
+          Size="98,42"
+          Id="Package\DIM_TIME\Sort"
+          TopLeft="355,139" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[OLE DB Source Output1]"
+          TopLeft="404.75,83">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,56"
+              Start="0,0"
+              End="0,48.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="107,42"
+          Id="Package\DIM_TIME\Sort 1"
+          TopLeft="132,314" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Derived Column Output1]"
+          TopLeft="139,267">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="46.5,47"
+              Start="0,0"
+              End="46.5,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.5"
+                    Point2="0,23.5"
+                    Point3="4,23.5" />
+                  <mssgle:LineSegment
+                    End="42.5,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="42.5,23.5"
+                    Point2="46.5,23.5"
+                    Point3="46.5,27.5" />
+                  <mssgle:LineSegment
+                    End="46.5,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="130,42"
+          Id="Package\DIM_TIME\Merge Join"
+          TopLeft="312,311" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Sort Output]"
+          TopLeft="239,333.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="73,0"
+              Start="0,0"
+              End="65.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="65.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Sort Output1]"
+          TopLeft="404,181">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-27,130"
+              Start="0,0"
+              End="-27,122.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,61" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,61"
+                    Point2="0,65"
+                    Point3="-4,65" />
+                  <mssgle:LineSegment
+                    End="-23,65" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-23,65"
+                    Point2="-27,65"
+                    Point3="-27,69" />
+                  <mssgle:LineSegment
+                    End="-27,122.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="168,42"
+          Id="Package\DIM_TIME\NAZWA_MIESIACA"
+          TopLeft="656.5,30.5" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\DIM_TIME\Derived Column 2"
+          TopLeft="301.5,400.5" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Merge Join Output]"
+          TopLeft="380,353">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.5"
+              Start="0,0"
+              End="0,40">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[OLE DB Source Output2]"
+          TopLeft="742,72.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,77.5"
+              Start="0,0"
+              End="0,70">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,70" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="107,42"
+          Id="Package\DIM_TIME\Sort 3"
+          TopLeft="522,398" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Derived Column Output2]"
+          TopLeft="464.5,420.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="57.5,0"
+              Start="0,0"
+              End="50,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="50,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Sort Output2]"
+          TopLeft="575.5,398">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="176.166666666667,-125"
+              Start="0,0"
+              End="176.166666666667,-117.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-70.1465149359886" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-70.1465149359886"
+                    Point2="0,-74.1465149359886"
+                    Point3="4,-74.1465149359886" />
+                  <mssgle:LineSegment
+                    End="172.166666666667,-74.1465149359886" />
+                  <mssgle:CubicBezierSegment
+                    Point1="172.166666666667,-74.1465149359886"
+                    Point2="176.166666666667,-74.1465149359886"
+                    Point3="176.166666666667,-78.1465149359886" />
+                  <mssgle:LineSegment
+                    End="176.166666666667,-117.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Sort Output3]"
+          TopLeft="743.5,192">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30,39"
+              Start="0,0"
+              End="30,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5"
+                    Point2="0,19.5"
+                    Point3="4,19.5" />
+                  <mssgle:LineSegment
+                    End="26,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26,19.5"
+                    Point2="30,19.5"
+                    Point3="30,23.5" />
+                  <mssgle:LineSegment
+                    End="30,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="97,42"
+          Id="Package\DIM_TIME\Rok"
+          TopLeft="866,302" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Merge Join Output1]"
+          TopLeft="795.333333333333,273">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="119.166666666667,29"
+              Start="0,0"
+              End="119.166666666667,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.79800853485063" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.79800853485063"
+                    Point2="0,11.7980085348506"
+                    Point3="4,11.7980085348506" />
+                  <mssgle:LineSegment
+                    End="115.166666666667,11.7980085348506" />
+                  <mssgle:CubicBezierSegment
+                    Point1="115.166666666667,11.7980085348506"
+                    Point2="119.166666666667,11.7980085348506"
+                    Point3="119.166666666667,15.7980085348506" />
+                  <mssgle:LineSegment
+                    End="119.166666666667,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="51.5833333333333,16.7980085348506,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="145,42"
+          Id="Package\DIM_TIME\DzienMiesiaca"
+          TopLeft="839,371" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Derived Column Output3]"
+          TopLeft="913,344">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27"
+              Start="0,0"
+              End="0,19.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\DIM_TIME\OLE DB Destination"
+          TopLeft="789,536" />
+        <NodeLayout
+          Size="107,42"
+          Id="Package\DIM_TIME\Sort 4"
+          TopLeft="847,447" />
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Derived Column Output4]"
+          TopLeft="911.5,413">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11,34"
+              Start="0,0"
+              End="-11,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13"
+                    Point2="0,17"
+                    Point3="-4,17" />
+                  <mssgle:LineSegment
+                    End="-7,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7,17"
+                    Point2="-11,17"
+                    Point3="-11,21" />
+                  <mssgle:LineSegment
+                    End="-11,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DIM_TIME.Paths[Sort Output4]"
+          TopLeft="900.5,489">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-26,47"
+              Start="0,0"
+              End="-26,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.5"
+                    Point2="0,23.5"
+                    Point3="-4,23.5" />
+                  <mssgle:LineSegment
+                    End="-22,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22,23.5"
+                    Point2="-26,23.5"
+                    Point3="-26,27.5" />
+                  <mssgle:LineSegment
+                    End="-26,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-21,28.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DIM_TIME\FACT_SALES">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DIM_TIME\DZIEN_TYGODNIA">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DIM_TIME\NAZWA_MIESIACA">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DIM_TIME\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
